@@ -18,6 +18,8 @@ class TimerManager:
         if not os.path.exists('timers.json'):
             with open('timers.json', 'w') as f:
                 json.dump({"timers":[]}, f)
+        self.readTimers()
+
     def addTimer(self,name,datetime):
         """
         @desc: 添加定时器
@@ -51,6 +53,7 @@ class TimerManager:
         @desc: 获取定时器列表
         :return: Timer类列表
         """
+        self.readTimers()
         TimerList=[]
         for  timer in self.timers:
             TimerList.append(Timer.Timer(timer["id"],timer["name"],timer["datetime"]))
