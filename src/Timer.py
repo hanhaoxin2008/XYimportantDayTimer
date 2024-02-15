@@ -4,6 +4,7 @@
 @time: 2024/2/15
 @desc: 定时器
 """
+import json
 import time
 class Timer:
     def __init__(self,id,name,datetime):
@@ -59,4 +60,43 @@ class Timer:
         距离xx还剩xx年xx月xx天xx小时xx分xx秒
         """
         return "距离%s还剩%s年%s月%s天%s小时%s分钟%s秒"%(self.name,self.getDiff()["year"],self.getDiff()["month"],self.getDiff()["day"],self.getDiff()["hour"],self.getDiff()["minute"],self.getDiff()["second"])
+    def remoev(self):
+        """
+        @desc: 删除计时器
+        """
+        #删除这个计时器
+        with  open("timers.json","r") as f:
+            data=json.load(f)
+            for timer in data["timers"]:
+                if timer["id"]==self.id:
+                    data["timers"].remove(timer)
+        with open("timers.json","w") as f:
+            json.dump(data,f)
+    def updateName(self,name):
+        """
+        @desc: 修改计时器名称
+        :param name: 新的名称
+        """
+        with open("timers.json","r") as f:
+            data=json.load(f)
+            for timer in data["timers"]:
+                if timer["id"]==self.id:
+                    timer["name"]=name
+        with open("timers.json","w") as f:
+            json.dump(data,f)
+    def updateDate(self,datetime):
+
+        """
+        @desc: 修改计时器时间
+        :param datetime: 新的时间
+        """
+        with open("timers.json","r") as f:
+            data=json.load(f)
+            for timer in data["timers"]:
+                if timer["id"]==self.id:
+                    timer["datetime"]=datetime
+        with open("timers.json","w") as f:
+            json.dump(data,f)
+
+
 
