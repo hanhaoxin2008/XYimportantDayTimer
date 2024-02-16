@@ -16,7 +16,7 @@ class TimerManager:
 
         self.timers=[]
         #检查timers.json是否存在
-        if not os.path.exists('../data/timers.json'):
+        if not os.path.exists(config.TIMERS_JSON_DIR):
             with open(config.TIMERS_JSON_DIR, 'w') as f:
                 json.dump({"timers":[]}, f)
         self.readTimers()
