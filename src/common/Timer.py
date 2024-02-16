@@ -6,6 +6,7 @@
 """
 import json
 import time
+from src.config import config
 class Timer:
     def __init__(self,id,name,datetime):
         """
@@ -65,24 +66,24 @@ class Timer:
         @desc: 删除计时器
         """
         #删除这个计时器
-        with  open("timers.json","r") as f:
+        with  open(config.TIMERS_JSON_DIR, "r") as f:
             data=json.load(f)
             for timer in data["timers"]:
                 if timer["id"]==self.id:
                     data["timers"].remove(timer)
-        with open("timers.json","w") as f:
+        with open("../data/timers.json", "w") as f:
             json.dump(data,f)
     def updateName(self,name):
         """
         @desc: 修改计时器名称
         :param name: 新的名称
         """
-        with open("timers.json","r") as f:
+        with open(config.TIMERS_JSON_DIR, "r") as f:
             data=json.load(f)
             for timer in data["timers"]:
                 if timer["id"]==self.id:
                     timer["name"]=name
-        with open("timers.json","w") as f:
+        with open(config.TIMERS_JSON_DIR, "w") as f:
             json.dump(data,f)
     def updateDate(self,datetime):
 
@@ -90,12 +91,12 @@ class Timer:
         @desc: 修改计时器时间
         :param datetime: 新的时间
         """
-        with open("timers.json","r") as f:
+        with open(config.TIMERS_JSON_DIR, "r") as f:
             data=json.load(f)
             for timer in data["timers"]:
                 if timer["id"]==self.id:
                     timer["datetime"]=datetime
-        with open("timers.json","w") as f:
+        with open(config.TIMERS_JSON_DIR, "w") as f:
             json.dump(data,f)
 
 
