@@ -1,18 +1,31 @@
+"""
+@author: hanhaoxin
+@file: addTierUi.py
+@time: 2024/2/15
+@desc: 添加计时器页面
+"""
+
 from PySide6.QtWidgets import QMessageBox,QHBoxLayout,QLineEdit,QPushButton,QWidget,QVBoxLayout,QSizePolicy, QFrame,QLabel, QMainWindow
-import sys
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 from src.common import  uiTools
 
 class addTimerUi(QMainWindow):
-    def __init__(self,tm):
-        super().__init__()
-        self.setStyleSheet(uiTools.readQss((self.__class__.__name__)))
+    def __init__(self,tm,parent=None):
+        """
+        @desc:添加定时器界面
+        :param tm: 计时器管理器对象
+        :param parent: 父元素
+        """
+        super().__init__(parent=parent)
         self.timerManager=tm
         self.initUI()
     def initUI(self):
         self.centralWidget= QWidget(self)
         self.setCentralWidget(self.centralWidget)
+        self.centralWidget.setObjectName("centralWidget")
+        self.centralWidget.setStyleSheet(uiTools.readQss((self.__class__.__name__)))
+
         self.setWindowTitle('添加重要日')
         #设置窗口大小不可变
         self.setFixedSize(400,400)
@@ -80,6 +93,13 @@ class addTimerUi(QMainWindow):
         self.layout.addWidget(self.title_label)
         self.layout.addWidget(self.data_entry)
         self.layout.addWidget(self.submit_button)
+
+
+        #设置窗口被关闭时的事件
+
+    def closeEvent(self, event):
+        self.close()
+        self.parent().show()
     def submit_data(self):
         name=self.name_entry.text()
         year=self.date_year_entry.text()
@@ -147,7 +167,13 @@ class addTimerUi(QMainWindow):
         if len(hour)==1:
             hour="0"+hour
         datestr="%s-%s-%s %s"%(year,month,day,hour)
-        self.timerManager.addTimer(name,datestr)
+
+        if self.timerManager.addTimer(name,datestr):
+            QMessageBox.information(self,"提示","添加成功")
+            self.close()
+        else:
+            QMessageBox.warning(self,"警告","添加失败")
+            self.initUI()
 
 
 

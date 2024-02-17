@@ -1,4 +1,4 @@
-QMainWindow{
+QWidget#centralWidget{
 
     background-color: white;
 }

@@ -2,7 +2,7 @@
 @author: hanhaoxin
 @file: TimerManager.py.py
 @time: 2024/2/15
-@desc: 定时器
+@desc: 计时器
 """
 import json
 import time
