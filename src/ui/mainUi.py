@@ -8,8 +8,8 @@
 from PySide6.QtWidgets import QListWidget,QListWidgetItem,QHBoxLayout,QPushButton,QFrame,QWidget,QLabel,QMainWindow,QVBoxLayout,QSizePolicy
 from  PySide6.QtCore import Qt
 from  PySide6.QtGui import QFont
-from ..common import uiTools
-from ..ui import addTimerUi,timerWidget
+from src.common import uiTools
+from src.ui import addTimerUi,timerWidget
 class mainUi(QMainWindow):
 
     def __init__(self,tm):

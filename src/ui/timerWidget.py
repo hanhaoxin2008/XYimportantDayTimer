@@ -1,5 +1,5 @@
 
-from ..ui import modifyTimerUi
+from src.ui import modifyTimerUi
 from PySide6.QtCore import  QTimer,QDateTime
 from PySide6.QtWidgets import QMessageBox,QMenu,QSizePolicy,QHBoxLayout,QWidget,QLabel,QVBoxLayout,QPushButton
 from  PySide6.QtCore import Qt
