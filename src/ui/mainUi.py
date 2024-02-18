@@ -5,11 +5,11 @@
 @desc: 主界面ui
 """
 
-from PySide6.QtWidgets import QHBoxLayout,QPushButton,QFrame,QWidget,QLabel,QMainWindow,QVBoxLayout,QSizePolicy
+from PySide6.QtWidgets import QListWidget,QListWidgetItem,QHBoxLayout,QPushButton,QFrame,QWidget,QLabel,QMainWindow,QVBoxLayout,QSizePolicy
 from  PySide6.QtCore import Qt
 from  PySide6.QtGui import QFont
 from src.common import uiTools
-from src.ui import addTimerUi
+from src.ui import addTimerUi,timerWidget
 class mainUi(QMainWindow):
 
     def __init__(self,tm):
@@ -26,9 +26,13 @@ class mainUi(QMainWindow):
         @desc:初始化界面
         :return:
         """
+        #设置默认大小
+        self.resize(800,600)
+
         #设置central widegt
         self.centralWidget = QWidget(self)
         self.setCentralWidget(self.centralWidget)
+        self.centralWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.centralWidget.setObjectName("centralWidget")
         #添加样式
         self.centralWidget.setStyleSheet(uiTools.readQss(self.__class__.__name__))
@@ -47,6 +51,7 @@ class mainUi(QMainWindow):
 
         #添加重要日按钮
         self.add_timer_button=QPushButton("添加重要日",self.button_frame)
+        self.add_timer_button.setObjectName("add_timer_button")
         self.add_timer_button.setSizePolicy(QSizePolicy.Fixed,QSizePolicy.Fixed)
         self.add_timer_button.setMinimumSize(100,30)
         self.add_timer_button.clicked.connect(self.add_tier_button_clicked)
@@ -57,7 +62,27 @@ class mainUi(QMainWindow):
         #重要日列表区域
         self.list_frame=QFrame(self.centralWidget)
         self.list_frame.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Preferred)
+        self.timer_list=QListWidget(self.list_frame)
+        self.timer_list.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Preferred)
+        self.list_frame.setLayout(QVBoxLayout())
+        self.list_frame.layout().addWidget(self.timer_list)
+        self.tw_list = []
 
+        t_list = self.timerm.getTimers()
+        print(t_list)
+        for timer in t_list:
+            iteam=QListWidgetItem()
+
+            self.timer_list.addItem(iteam)
+            tw = timerWidget.timerWidget(timer, self)
+            #tw.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+            #self.list_frame.layout().addWidget(tw)
+            self.timer_list.setItemWidget(iteam, tw)
+            iteam.setSizeHint(tw.sizeHint())
+            self.tw_list.append(tw)
+        self.list_frame_layout_label=QLabel()
+        self.list_frame_layout_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        #self.list_frame.layout().addWidget(self.list_frame_layout_label)
         #设置窗口布局
         self.root_layout=QVBoxLayout(self.centralWidget)
         self.root_layout.addWidget(self.title_label)

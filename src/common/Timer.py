@@ -60,7 +60,9 @@ class Timer:
         :return :字符串 格式：
         距离xx还剩xx年xx月xx天xx小时xx分xx秒
         """
-        return "距离%s还剩%s年%s月%s天%s小时%s分钟%s秒"%(self.name,self.getDiff()["year"],self.getDiff()["month"],self.getDiff()["day"],self.getDiff()["hour"],self.getDiff()["minute"],self.getDiff()["second"])
+        #return "距离%s还剩%s年%s月%s天%s小时%s分钟%s秒"%(self.name,self.getDiff()["year"],self.getDiff()["month"],self.getDiff()["day"],self.getDiff()["hour"],self.getDiff()["minute"],self.getDiff()["second"])
+        return "%s年%s月%s天%s小时%s分钟%s秒"%(self.getDiff()["year"],self.getDiff()["month"],self.getDiff()["day"],self.getDiff()["hour"],self.getDiff()["minute"],self.getDiff()["second"])
+
     def remoev(self):
         """
         @desc: 删除计时器
@@ -71,7 +73,7 @@ class Timer:
             for timer in data["timers"]:
                 if timer["id"]==self.id:
                     data["timers"].remove(timer)
-        with open("../data/timers.json", "w") as f:
+        with open(config.TIMERS_JSON_DIR, "w") as f:
             json.dump(data,f)
     def updateName(self,name):
         """
@@ -98,6 +100,21 @@ class Timer:
                     timer["datetime"]=datetime
         with open(config.TIMERS_JSON_DIR, "w") as f:
             json.dump(data,f)
+    def getYearStr(self):
+        return  self.datetime[0:4]
+    def getMonthStr(self):
+        return  self.datetime[5:7]
+    def getDayStr(self):
+        return  self.datetime[8:10]
+    def getHourStr(self):
+        return  self.datetime[11:13]
+    def update(self,name,datetime):
+        try:
+            self.updateName(name)
+            self.updateDate(datetime)
+        except Exception as e:
+            return False
+        return True
 
 
 

@@ -2,8 +2,8 @@ QWidget#centralWidget{
 
     background-color: white;
 }
-QPushButton{
-background-color: black;
+QPushButton#add_timer_button{
+    background-color: black;
     color: white;
     border-radius: 15px;
     border: none;

@@ -54,7 +54,7 @@ class TimerManager:
                 data=json.load(f)
                 self.timers=data["timers"]
 
-    def getTiers(self):
+    def getTimers(self):
         """
         @desc: 获取定时器列表
         :return: Timer类列表

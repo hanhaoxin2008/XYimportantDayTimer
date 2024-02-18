@@ -1,6 +1,6 @@
 """
 @author: hanhaoxin
-@file: addTierUi.py
+@file: modifyTierUi.py
 @time: 2024/2/15
 @desc: 添加计时器页面
 """
@@ -10,15 +10,15 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 from src.common import  uiTools
 
-class addTimerUi(QMainWindow):
-    def __init__(self,tm,parent=None):
+class modifyTimerUi(QMainWindow):
+    def __init__(self,timer,parent=None):
         """
         @desc:添加定时器界面
-        :param tm: 计时器管理器对象
+        :param timer: 计时器
         :param parent: 父元素
         """
+        self.timer=timer
         super().__init__(parent=parent)
-        self.timerManager=tm
         self.initUI()
     def initUI(self):
         self.centralWidget= QWidget(self)
@@ -26,12 +26,12 @@ class addTimerUi(QMainWindow):
         self.centralWidget.setObjectName("centralWidget")
         self.centralWidget.setStyleSheet(uiTools.readQss((self.__class__.__name__)))
 
-        self.setWindowTitle('添加重要日')
+        self.setWindowTitle('修改重要日')
         #设置窗口大小不可变
         self.setFixedSize(400,400)
         self.centralWidget.setContentsMargins(10,10,10,10)
 
-        self.title_label=QLabel("添加重要日",self.centralWidget)
+        self.title_label=QLabel("修改重要日",self.centralWidget)
         self.setObjectName("title_label")
         self.title_label.setAlignment(Qt.AlignCenter)
         title_label_font=QFont("微软雅黑",20)
@@ -42,7 +42,7 @@ class addTimerUi(QMainWindow):
         self.data_entry=QFrame(self.centralWidget)
         self.data_entry.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        self.name_label=QLabel("名称",self.data_entry)
+        self.name_label=QLabel(self.timer.getName(),self.data_entry)
         self.name_entry=QLineEdit()
         self.name_entry.setMinimumSize(0,30)
 
@@ -53,16 +53,16 @@ class addTimerUi(QMainWindow):
         self.date_label=QLabel("日期",self.data_entry)
         self.date_year_entry=QLineEdit()
         self.date_year_entry.setMinimumSize(0,30)
-        self.date_year_entry.setPlaceholderText("年")
+        self.date_year_entry.setPlaceholderText(self.timer.getYearStr())
         self.date_month_entry=QLineEdit()
         self.date_month_entry.setMinimumSize(0,30)
-        self.date_month_entry.setPlaceholderText("月")
+        self.date_month_entry.setPlaceholderText(self.timer.getMonthStr())
         self.date_day_entry=QLineEdit()
         self.date_day_entry.setMinimumSize(0,30)
-        self.date_day_entry.setPlaceholderText("日")
+        self.date_day_entry.setPlaceholderText(self.timer.getDayStr())
         self.date_hour_entry=QLineEdit()
         self.date_hour_entry.setMinimumSize(0,30)
-        self.date_hour_entry.setPlaceholderText("时")
+        self.date_hour_entry.setPlaceholderText(self.timer.getHourStr())
 
 
         self.date_entry_layout=QHBoxLayout()
@@ -107,9 +107,16 @@ class addTimerUi(QMainWindow):
         day=self.date_day_entry.text()
         hour=self.date_hour_entry.text()
 
-        if name=="" or year=="" or month=="" or day=="" or hour=="":
-            QMessageBox.warning(self,"警告","输入不能为空")
-            return
+        if name=="" :
+            name=self.timer.getName()
+        if year=="":
+            year=self.timer.getYearStr()
+        if  month=="":
+            month=self.timer.getMonthStr()
+        if day=="":
+            day=self.timer.getDayStr()
+        if hour=="":
+            hour=self.timer.getHourStr()
 
         #检测year,moth,day,hour是否是数字
         if  not year.isdigit() or not month.isdigit() or not day.isdigit() or not hour.isdigit():
@@ -168,7 +175,7 @@ class addTimerUi(QMainWindow):
             hour="0"+hour
         datestr="%s-%s-%s %s"%(year,month,day,hour)
 
-        if self.timerManager.addTimer(name,datestr):
+        if self.timer.update(name,datestr):
             QMessageBox.information(self,"提示","添加成功")
             self.parent().initUI()
             self.close()
