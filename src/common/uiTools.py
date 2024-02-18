@@ -5,8 +5,8 @@
 @time: 2024/2/16
 @desc: ui工具
 """
-from src.config import config
-from src.common.setting import setting
+from ..config import config
+from ..common.setting import setting
 def readQss(classname):
     """
     读取qss文件

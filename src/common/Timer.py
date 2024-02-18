@@ -6,7 +6,7 @@
 """
 import json
 import time
-from src.config import config
+from ..config import config
 class Timer:
     def __init__(self,id,name,datetime):
         """

@@ -8,7 +8,7 @@
 from PySide6.QtWidgets import QMessageBox,QHBoxLayout,QLineEdit,QPushButton,QWidget,QVBoxLayout,QSizePolicy, QFrame,QLabel, QMainWindow
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
-from src.common import  uiTools
+from ..common import  uiTools
 
 class addTimerUi(QMainWindow):
     def __init__(self,tm,parent=None):

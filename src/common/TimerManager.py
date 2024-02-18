@@ -4,8 +4,8 @@
 @time: 2024/2/15
 @desc: 定时器管理器
 """
-from src.config import config
-from src.common import Timer
+from ..config import config
+from ..common import Timer
 import os
 import json
 class TimerManager:
