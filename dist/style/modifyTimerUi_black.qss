@@ -1,0 +1,21 @@
+QWidget#centralWidget{
+
+    background-color: white;
+}
+
+QPushButton#submit_button{
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    border: none;
+}
+
+QLineEdit{
+    background-color: white;
+    color: black;
+    padding-left: 10;
+    padding-right:10;
+    border:2 solid black;
+    border-radius:10px;
+
+}
